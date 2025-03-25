@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {View, Text, TextInput, Button} from 'react-native';
 import { AuthContext } from '@/AuthContext';
 
-const RegisterScreem = ({navigation}: {navigation: any }) => {
+const RegisterScreen = ({navigation}: {navigation: any }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,3 +31,5 @@ const RegisterScreem = ({navigation}: {navigation: any }) => {
         </View>
     );
 }
+
+export default RegisterScreen;

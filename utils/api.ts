@@ -10,11 +10,11 @@ import * as SecureStore from "expo-secure-store";
  });
 
  // Store and retrieve tokens securely
- export async function saveToken(token) {
+ export async function saveToken(token:string) {
     await SecureStore.setItemAsync("authToken", token);
  }
 
- export async function getToken() {
+ export async function getToken(): Promise<string | null> {
     return await SecureStore.getItemAsync("authToken");
  }
 

@@ -15,7 +15,8 @@ export default function Index() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get("/users");
+        const response = await api.get("/user");
+         console.log("User Data:", response.data); 
         setUser(response.data);
       } catch (error) {
         await removeToken();
@@ -38,7 +39,7 @@ export default function Index() {
 
   return (
     <View>
-      <Text>Welcome, {user?.email}</Text>
+      <Text>Welcome, {user?.name}</Text>
       <Button title="Logout" onPress={handleLogout} />
     </View>
   );

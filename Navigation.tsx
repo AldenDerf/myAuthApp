@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./app/Login";
-import RegisterScreen from "./app/Register";
+import RegisterScreen from "./app/register";
 import HomeScreen from "./app/Home";
 import { AuthContext } from "./app/AuthContext";
 

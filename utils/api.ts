@@ -1,34 +1,55 @@
 import axios from "axios";
+import { Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ Works on Web and Mobile
 
-import * as SecureStore from "expo-secure-store";
+const API_URL = "http://20.0.0.75:8000/api";
 
- const API_URL = `http://bghapis.test/api`;
+const api = axios.create({
+  baseURL: API_URL,
+  headers: { "Content-Type": "application/json" },
+});
 
- const api = axios.create({
-    baseURL: API_URL,
-    headers: {"Content-Type": "application/json"},
- });
+// Store token securely (Use AsyncStorage for all platforms)
+export async function saveToken(token: string): Promise<void> {
+  try {
+    console.log("Saving Token:", token);
+    await AsyncStorage.setItem("authToken", token); // ✅ Works on Web and Mobile
+  } catch (error) {
+    console.error("Error saving token:", error);
+  }
+}
 
- // Store and retrieve tokens securely
- export async function saveToken(token:string) {
-    await SecureStore.setItemAsync("authToken", token);
- }
+// Retrieve token
+export async function getToken(): Promise<string | null> {
+  try {
+    return await AsyncStorage.getItem("authToken"); // ✅ Works on Web and Mobile
+  } catch (error) {
+    console.error("Error getting token:", error);
+    return null;
+  }
+}
 
- export async function getToken(): Promise<string | null> {
-    return await SecureStore.getItemAsync("authToken");
- }
+// Remove token
+export async function removeToken(): Promise<void> {
+  try {
+    await AsyncStorage.removeItem("authToken"); // ✅ Works on Web and Mobile
+  } catch (error) {
+    console.error("Error removing token:", error);
+  }
+}
 
- export async function removeToken() {
-    await SecureStore.deleteItemAsync("authToken");
- }
-
- // Attach the token to requests
- api.interceptors.request.use(async (config) => {
+// Attach token to requests
+api.interceptors.request.use(async (config) => {
+  try {
     const token = await getToken();
     if (token) {
-        config.headers.Authorization  = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return config;
- });
+  } catch (error) {
+    console.error("Error attaching token:", error);
+  }
 
- export default api;
+  return config;
+});
+
+export default api;

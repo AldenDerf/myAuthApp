@@ -11,10 +11,11 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const response = await api.post("/login", { email, password });
-      console.log(email, password)
       await saveToken(response.data.data.token);
       Alert.alert("Success", "Logged in successfully!");
       router.replace("/");
+
+      // Reset the navigation stack
     } catch (error: any) {
       Alert.alert("Error", error.response?.data.message || "Login failed");
       console.log(error);

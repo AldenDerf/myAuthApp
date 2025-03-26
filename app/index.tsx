@@ -38,7 +38,7 @@ export default function Index() {
 
   return (
     <View>
-      <Text>Welcome, {user?.name}</Text>
+      <Text>Welcome, {user?.email}</Text>
       <Button title="Logout" onPress={handleLogout} />
     </View>
   );
